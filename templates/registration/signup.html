@@ -1,0 +1,12 @@
+{% extends 'base.html' %} {% load static %} {% blcok title %}Signup{% endblock
+%} {% block content %}
+
+<div>
+  <h2>Signup</h2>
+  <form method="post">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit">Signup</button>
+  </form>
+</div>
+
+{% endblock %}
