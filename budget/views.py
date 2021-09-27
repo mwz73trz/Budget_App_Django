@@ -4,6 +4,7 @@ from .models import Debt, Credit
 from .forms import DebtForm, CreditForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
 
 def get_debt(debt_id):
     return Debt.objects.get(id=debt_id)
@@ -15,7 +16,8 @@ def get_credit(credit_id):
 def get_debt_credit_list(request):
     debits = Debt.objects.filter(user=request.user)
     credits = Credit.objects.filter(user=request.user)
-    return render(request, 'budget.html', {'debits': debits, 'credits': credits})
+    total_debt = Debt.objects.all().aggregate(sum=Sum('amount'))['sum']
+    return render(request, 'budget_forms/debt_credit_list.html', {'debits': debits, 'credits': credits})
 
 
 def new_debt(request):
@@ -28,7 +30,7 @@ def new_debt(request):
             return (get_debt_credit_list(request))
     else:
         form = DebtForm()
-    return render(request, 'debt_form.html', {'form': form, 'type_of_request': 'New'})
+    return render(request, 'budget_forms/debt_form.html', {'form': form, 'type_of_request': 'New'})
 
 def edit_debt(request, debt_id):
     debt = get_debt(debt_id)
@@ -41,7 +43,7 @@ def edit_debt(request, debt_id):
             return get_debt_credit_list(request)
     else:
         form = DebtForm(instance=debt)
-    return render(request, 'debt_form.html', {'form': form, 'type_of_request': 'Edit'})
+    return render(request, 'budget_forms/debt_form.html', {'form': form, 'type_of_request': 'Edit'})
 
 def delete_debt(request, debt_id):
     if request.method == "POST":
@@ -59,7 +61,7 @@ def new_credit(request):
             return (get_debt_credit_list(request))
     else:
         form = CreditForm()
-    return render(request, 'credit_form.html', {'form': form, 'type_of_request': 'New'})
+    return render(request, 'budget_forms/credit_form.html', {'form': form, 'type_of_request': 'New'})
 
 def edit_credit(request, credit_id):
     credit = get_credit(credit_id)
@@ -72,10 +74,11 @@ def edit_credit(request, credit_id):
             return get_debt_credit_list(request)
     else:
         form = CreditForm(instance=credit)
-    return render(request, 'credit_form.html', {'form': form, 'type_of_request': 'Edit'})
+    return render(request, 'budget_forms/credit_form.html', {'form': form, 'type_of_request': 'Edit'})
 
 def delete_credit(request, credit_id):
     if request.method == "POST":
         credit = get_credit(credit_id)
         credit.delete()
     return get_debt_credit_list(request)
+

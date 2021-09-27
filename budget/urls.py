@@ -4,7 +4,7 @@ from . import views
 app_name = 'budget'
 
 urlpatterns = [
-    path('', views.get_debt_credit_list, name='debit_credit_list'),
+    path('', views.get_debt_credit_list, name='debt_credit_list'),
     path('new_debt', views.new_debt, name='new_debt'),
     path('<int:debt_id>/edit', views.edit_debt, name='edit_debt'),
     path('<int:debt_id>/delete', views.delete_debt, name='delete_debt'),

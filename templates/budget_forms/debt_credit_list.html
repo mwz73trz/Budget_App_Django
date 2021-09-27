@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div>
+  <h1>Debt and Credit for User: {{user.username}}</h1>
+  <h1>Debt</h1>
+  <h1>{% for debt in debits %}
+    <li>
+      {{debt.name}} = ${{debt.amount}}
+      <a href="{% url 'budget:edit_debt' debt_id=debt.id %}">Edit</a>
+      <form name="delete_debt" method="POST" action="{% url 'budget:delete_debt' debt_id=debt.id %}">
+        {% csrf_token %}
+        <input class="btn btn-primary" type="submit" value="Delete" />
+      </form>
+    </li>
+    {% endfor %}</h1>
+  <br />
+  <h3>Total Debt: ${{total_debt.sum}}</h3>
+  <a href="{% url 'budget:new_debt' %}">New Debt</a>
+  <br />
+  <h1>Credit</h1>
+  <ul>
+    <h3>{% for credit in credits %}
+      <li>
+        {{credit.name}} = ${{credit.amount}}
+      </li>
+      {% endfor %}</h3>
+  </ul>
+</div>
+<div>
+  <h2>Total Debt: ${{debt.total_debt}}</h2>
+</div>
+
+{% endblock %}
