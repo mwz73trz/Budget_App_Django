@@ -1,0 +1,35 @@
+.debt-credit-list-title {
+  text-align: center;
+}
+
+.debt-credit-list-container {
+  display: flex;
+}
+
+.flex-child-debt {
+  width: 45%;
+  float: left;
+  padding: 20px;
+  border: 2px solid red;
+  margin: auto;
+}
+
+.flex-child-credit {
+  width: 45%;
+  float: right;
+  padding: 20px;
+  border: 2px solid red;
+  margin: auto;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.in-minus-out-container {
+  text-align: center;
+  border: 2px solid red;
+  background-color: bisque;
+  padding: 20px;
+  margin: auto;
+}

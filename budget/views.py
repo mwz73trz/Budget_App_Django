@@ -16,8 +16,11 @@ def get_credit(credit_id):
 def get_debt_credit_list(request):
     debits = Debt.objects.filter(user=request.user)
     credits = Credit.objects.filter(user=request.user)
-    total_debt = Debt.objects.all().aggregate(sum=Sum('amount'))['sum']
-    return render(request, 'budget_forms/debt_credit_list.html', {'debits': debits, 'credits': credits})
+    total_debt = Debt.objects.filter(user=request.user).aggregate(total_debt=Sum('amount'))
+    total_credit = Credit.objects.filter(user=request.user).aggregate(total_credit=Sum('amount'))
+    in_minus_out = total_credit['total_credit'] - total_debt['total_debt']
+    print(in_minus_out)
+    return render(request, 'budget_forms/debt_credit_list.html', {'debits': debits, 'credits': credits, 'total_debt': total_debt, 'total_credit': total_credit, 'in_minus_out': in_minus_out})
 
 
 def new_debt(request):
