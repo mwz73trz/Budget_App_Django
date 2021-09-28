@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div>
+  <div class="debt-credit-list-title">
+    <h1>Debt and Credit for User: {{user.username}}</h1>
+  </div>
+  <div class="debt-credit-list-container">
+    <div class="flex-child-debt">
+      <h1>Debt Per Month</h1>
+      <ul>
+        {% for debt in debits %}
+        <li>
+          <h4>{{debt.name}} = ${{debt.year_total}}</h4>
+        </li>
+        {% endfor %}
+      </ul>
+      <br />
+      <h2>Total Monthly Debt: ${{total_debt.total_debt}}</h2>
+    </div>
+    <div class="flex-child-credit">
+      <h1>Credit Per Month</h1>
+      <ul>
+        {% for credit in credits %}
+        <li>
+          <h4>{{credit.name}} = ${{credit.year_total}}</h4>
+        </li>
+        {% endfor %}
+      </ul>
+      <h2>Total Monthly Credit: ${{total_credit.total_credit}}</h2>
+    </div>
+  </div>
+  <br /><br />
+  <div class="in-minus-out-container">
+    <h2>Money In minus (-) Money Out: ${{in_minus_out}} Per Month</h2>
+  </div>
+</div>
+
+{% endblock %}

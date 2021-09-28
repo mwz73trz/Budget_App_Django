@@ -4,7 +4,7 @@ from .models import Debt, Credit
 from .forms import DebtForm, CreditForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.db.models import Sum
+from django.db.models import Sum, F
 
 def get_debt(debt_id):
     return Debt.objects.get(id=debt_id)
@@ -19,8 +19,16 @@ def get_debt_credit_list(request):
     total_debt = Debt.objects.filter(user=request.user).aggregate(total_debt=Sum('amount'))
     total_credit = Credit.objects.filter(user=request.user).aggregate(total_credit=Sum('amount'))
     in_minus_out = total_credit['total_credit'] - total_debt['total_debt']
-    print(in_minus_out)
     return render(request, 'budget_forms/debt_credit_list.html', {'debits': debits, 'credits': credits, 'total_debt': total_debt, 'total_credit': total_credit, 'in_minus_out': in_minus_out})
+
+@login_required
+def get_annual_totals(request):
+    debits = Debt.objects.filter(user=request.user)
+    credits = Credit.objects.filter(user=request.user)
+    total_debt = Debt.objects.filter(user=request.user).aggregate(total_debt=Sum('amount') * 12)
+    total_credit = Credit.objects.filter(user=request.user).aggregate(total_credit=Sum('amount') * 12)
+    in_minus_out = total_credit['total_credit'] - total_debt['total_debt']
+    return render(request, 'budget_forms/annual_totals.html', {'debits': debits, 'credits': credits, 'total_debt': total_debt, 'total_credit': total_credit, 'in_minus_out': in_minus_out})
 
 
 def new_debt(request):

@@ -9,6 +9,11 @@ class Debt(models.Model):
     def __str__(self):
         return f"{self.name} totals ${self.amount}"
 
+    @property
+    def year_total(self):
+        annual_amount = self.amount * 12
+        return annual_amount
+
 class Credit(models.Model):
     name = models.CharField(max_length=150)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
@@ -16,4 +21,9 @@ class Credit(models.Model):
 
     def __str__(self):
         return f"{self.name} totals ${self.amount}"
+
+    @property
+    def year_total(self):
+        annual_amount = self.amount * 12
+        return annual_amount
 

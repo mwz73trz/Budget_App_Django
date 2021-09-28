@@ -33,3 +33,8 @@ ul {
   padding: 20px;
   margin: auto;
 }
+
+.annual-totals {
+  text-align: center;
+  font-size: xx-large;
+}
