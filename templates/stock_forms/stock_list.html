@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+<div>
+  <br>
+  <h1>Stocks for {{ user.username }}</h1>
+  <br />
+  <ul>
+    {% for stock in stocks %}
+    <li>
+      <a class="get_stock_detail" href="{% url 'stocks:get_stock_detail' stock_id=stock.id %}">
+        <h4>{{stock.name}}</h4>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  <br />
+  <a class="new_stock" href="{% url 'stocks:new_stock' %}">Enter New Stock</a>
+  {% else %}
+  <div>
+    <h1>You are not logged in!</h1>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

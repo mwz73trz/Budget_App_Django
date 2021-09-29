@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div>
+  <h1>Details for Stock: {{ stock.name }}</h1>
+  <br />
+  <div>
+    <h4>Symbol: {{stock.symbol}}</h4>
+    <h4>Shares Owned: {{stock.shares}}</h4>
+    <br />
+    <a class="edit_stock" href="{% url 'stocks:edit_stock' stock_id=stock.id %}">Edit Stock</a>
+    <br />
+    <form name="delete_stock" method="POST" action="{% url 'stocks:delete_stock' stock_id=stock.id %}">
+      {% csrf_token %}
+      <input class="delete_stock btn-primary" type="submit" value="Delete Stock" />
+    </form>
+  </div>
+</div>
+
+{% endblock %}
