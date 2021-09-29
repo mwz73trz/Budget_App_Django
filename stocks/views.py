@@ -66,6 +66,7 @@ def stock_quote(request, stock_id):
         'previous_close_price': response['Global Quote']['08. previous close'],
         'price_change': response['Global Quote']['09. change'],
         'price_change_percent': response['Global Quote']['10. change percent'],
+        'my_total_stock_price': float(response['Global Quote']['05. price']) * stock.shares,
         'stock': stock
     }
     return render(request, 'stock_forms/stock_quote.html', content)
