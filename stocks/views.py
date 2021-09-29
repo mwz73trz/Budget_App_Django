@@ -5,6 +5,8 @@ from .forms import StockForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
+stock_api_key = 'UFWJ7MO87LLQIV5F'
+
 def get_stock(stock_id):
     return Stock.objects.get(id=stock_id)
 
@@ -47,4 +49,24 @@ def delete_stock(request, stock_id):
         stock = get_stock(stock_id)
         stock.delete()
     return get_stocks(request)
+
+def stock_search_generator(symbol):
+    return f"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey={stock_api_key}"
+
+def stock_quote(request, stock_id):
+    stock = get_stock(stock_id)
+    stock_for_quote = stock_search_generator(stock.symbol)
+    r = requests.get(stock_for_quote)
+    response = r.json()
+    content = {
+        'opening_price': response['Global Quote']['02. open'],
+        'high_price': response['Global Quote']['03. high'],
+        'low_price': response['Global Quote']['04. low'],
+        'current_price': response['Global Quote']['05. price'],
+        'previous_close_price': response['Global Quote']['08. previous close'],
+        'price_change': response['Global Quote']['09. change'],
+        'price_change_percent': response['Global Quote']['10. change percent'],
+        'stock': stock
+    }
+    return render(request, 'stock_forms/stock_quote.html', content)
 

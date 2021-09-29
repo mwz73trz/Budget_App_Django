@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div>
+  <h1>Current Stock Quote for {{stock.name}}({{stock.symbol}})</h1>
+  <br />
+  <h2>Current Price: ${{current_price}}</h2>
+  <br />
+  <h4>Opening Price: ${{opening_price}}</h4>
+  <h4>High Price: ${{high_price}}</h4>
+  <h4>Low Price: ${{low_price}}</h4>
+  <h4>Previous Close Price: ${{previous_close_price}}</h4>
+  <h4>Price Change: ${{price_change}}</h4>
+  <h4>Price Change Percent: ${{price_change_percent}}</h4>
+</div>
+
+{% endblock %}

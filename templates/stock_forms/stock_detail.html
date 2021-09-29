@@ -15,6 +15,8 @@
       {% csrf_token %}
       <input class="delete_stock btn-primary" type="submit" value="Delete Stock" />
     </form>
+    <br />
+    <a class="stock_quote" href="{% url 'stocks:stock_quote' stock_id=stock.id %}">Current Stock Quote</a>
   </div>
 </div>
 
