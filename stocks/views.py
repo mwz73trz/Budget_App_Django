@@ -71,3 +71,26 @@ def stock_quote(request, stock_id):
     }
     return render(request, 'stock_forms/stock_quote.html', content)
 
+
+def stock_overview(request):
+    if request.method == "GET":
+        query = request.GET.get("q")
+        r = requests.get(f"https://www.alphavantage.co/query?function=OVERVIEW&symbol={query}&apikey={stock_api_key}")
+        response = r.json()
+        content = {
+            'symbol': response['Symbol'],
+            'asset_type': response['AssetType'],
+            'name': response['Name'],
+            'description': response['Description'],
+            'exchange': response['Exchange'],
+            'currency': response['Currency'],
+            'country': response['Country'],
+            'sector': response['Sector'],
+            'industry': response['Industry'],
+            'address': response['Address'],
+            '52_week_high': response['52WeekHigh'],
+            '52_week_low': response['52WeekLow']
+        }
+        return render(request, 'stock_forms/stock_overview.html', content)
+
+

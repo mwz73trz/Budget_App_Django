@@ -17,10 +17,17 @@
   </ul>
   <br />
   <a class="new_stock" href="{% url 'stocks:new_stock' %}">Enter New Stock</a>
+  <br />
+  <br />
+  <form class="d-flex" type="get" action="{% url 'stocks:stock_overview' %}">
+    <input class="form-control me-2" type="search" id="q" name="q" placeholder="Search Stock Info by Symbol"
+      aria-label="Search">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+  </form>
   {% else %}
   <div>
     <h1>You are not logged in!</h1>
   </div>
-  {% endif %}
 </div>
+{% endif %}
 {% endblock %}

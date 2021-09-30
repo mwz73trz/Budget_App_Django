@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div>
+  <h1>Overview for {{name}}({{symbol}})</h1>
+  <h4>Asset Type: {{asset_type}}</h4>
+  <h4>Description: <p>{{description}}</p>
+  </h4>
+  <h4>Exchange: {{exchange}}</h4>
+  <h4>Currency: {{currency}}</h4>
+  <h4>Country: {{country}}</h4>
+  <h4>Sector: {{sector}}</h4>
+  <h4>Industry: {{industry}}</h4>
+  <h4>Address: {{address}}</h4>
+  <h4>52 Week High: ${{52_week_high}}</h4>
+  <h4>52 Week Low: ${{52_week_low}}</h4>
+
+  {% endblock %}
